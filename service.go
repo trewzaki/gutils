@@ -13,7 +13,7 @@ import (
 // 		return utils.ReturnServiceError()
 // 	}
 
-func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, topicName string, data amqp.Delivery) (map[string]interface{}, bool) {
+func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, topicName string, data amqp.Delivery, clientRPC func([]byte, string, string, string) []byte) (map[string]interface{}, bool) {
 	dataMap["user_id"] = "service"
 
 	reqByte, marshalErr := json.Marshal(dataMap)
@@ -23,7 +23,7 @@ func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, top
 		return nil, false
 	}
 
-	resByte := ClientRPC(reqByte, serviceName, topicName, data.CorrelationId)
+	resByte := clientRPC(reqByte, serviceName, topicName, data.CorrelationId)
 
 	resMap := map[string]interface{}{}
 
