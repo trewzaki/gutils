@@ -10,9 +10,9 @@ import (
 )
 
 // GatewayLogger : Gateway log with physical path, function name, client IP and request time
-func GatewayLogger(c *gin.Context, functionName string) {
+func GatewayLogger(c *gin.Context, funcName string) {
 	// tmpPath, _ := c.Get("path")
-	fmt.Printf("\n>>>>>>>>> Path: %s => Trig %s() function\n", c.Request.URL, functionName)
+	fmt.Printf("\n>>>>>>>>> Path: %s => Trig %s() function\n", c.Request.URL, funcName)
 	fmt.Print("========> Request From: ", c.ClientIP())
 	fmt.Println(" | Request Time:", time.Now())
 }

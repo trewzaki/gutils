@@ -6,7 +6,7 @@ import (
 )
 
 // ErrorResponse : Error response model
-type ErrorResponse struct {
+type errorResponse struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
 }
