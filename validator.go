@@ -84,7 +84,7 @@ func IsArrayInterface(dataMap map[string]interface{}, varNames []string) bool {
 
 // ReturnValidationError : Return error response when somethong wrong about validate variable
 func ReturnValidationError() []byte {
-	errRes := ErrorResponse{}
+	errRes := errorResponse{}
 	errRes.Success = false
 	errRes.Message = "Invalid data type or variable name."
 

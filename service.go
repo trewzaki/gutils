@@ -40,7 +40,7 @@ func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, top
 
 // ReturnServiceError : Return error response when somethong wrong about service communication
 func ReturnServiceError() []byte {
-	errRes := ErrorResponse{}
+	errRes := errorResponse{}
 	errRes.Success = false
 	errRes.Message = "Service Communication error."
 
