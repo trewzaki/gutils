@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// ErrorResponse : Error response model
 type ErrorResponse struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
@@ -13,6 +14,7 @@ type ErrorResponse struct {
 // >> Send response example:
 // return SendResposne(true, &message, map[string]interface{}{"foo": "bar"})
 
+// SendResponse :  Standard response form in my projects
 func SendResponse(success bool, message *string, data map[string]interface{}) []byte {
 	resMap := map[string]interface{}{
 		"success": success,

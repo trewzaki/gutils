@@ -7,10 +7,11 @@ import (
 )
 
 // >> Validation example:
-// if ok := utils.IsString(dataMap, []string{"variable1", "variable2"}); !ok {
-// 	return utils.ReturnValidationError()
+// if ok := gutils.IsString(dataMap, []string{"variable1", "variable2"}); !ok {
+// 	return gutils.ReturnValidationError()
 // }
 
+// IsString : Common Validator with string type value
 func IsString(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(string); !ok {
@@ -21,6 +22,7 @@ func IsString(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
+// IsInt : Common Validator with int type value
 func IsInt(dataMap map[string]interface{}, varNames []string, c amqp.Delivery) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(uint32); !ok {
@@ -31,6 +33,7 @@ func IsInt(dataMap map[string]interface{}, varNames []string, c amqp.Delivery) b
 	return true
 }
 
+// IsFloat : Common Validator with float type value
 func IsFloat(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(float64); !ok {
@@ -41,6 +44,7 @@ func IsFloat(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
+// IsBool : Common Validator with boolean type value
 func IsBool(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(bool); !ok {
@@ -51,6 +55,7 @@ func IsBool(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
+// IsInterface : Common Validator with interface type value
 func IsInterface(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(interface{}); !ok {
@@ -61,11 +66,12 @@ func IsInterface(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
+// IsArrayInterface : Common Validator with array interface type value
 func IsArrayInterface(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].([]interface{}); !ok {
 			return false
-		} else {
+		} else if ok {
 			tmpMap := dataMap[vn].([]interface{})
 			if len(tmpMap) == 0 {
 				return false
@@ -76,6 +82,7 @@ func IsArrayInterface(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
+// ReturnValidationError : Return error response when somethong wrong about validate variable
 func ReturnValidationError() []byte {
 	errRes := ErrorResponse{}
 	errRes.Success = false

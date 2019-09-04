@@ -8,11 +8,12 @@ import (
 )
 
 // >> Service communication example:
-//  serviceResMap, ok := utils.ServiceCommunicator(userResMap, "service", "service.queue", data)
+//  serviceResMap, ok := gutils.ServiceCommunicator(userResMap, "service", "service.queue", data)
 // 	if !ok {
-// 		return utils.ReturnServiceError()
+// 		return gutils.ReturnServiceError()
 // 	}
 
+// ServiceCommunicator : Service communicator function for rabbitmq
 func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, topicName string, data amqp.Delivery, clientRPC func([]byte, string, string, string) []byte) (map[string]interface{}, bool) {
 	dataMap["user_id"] = "service"
 
@@ -37,6 +38,7 @@ func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, top
 	return resMap, true
 }
 
+// ReturnServiceError : Return error response when somethong wrong about service communication
 func ReturnServiceError() []byte {
 	errRes := ErrorResponse{}
 	errRes.Success = false
