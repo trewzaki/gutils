@@ -2,8 +2,6 @@ package gutils
 
 import (
 	"encoding/json"
-
-	"github.com/streadway/amqp"
 )
 
 // >> Validation example:
@@ -23,7 +21,7 @@ func IsString(dataMap map[string]interface{}, varNames []string) bool {
 }
 
 // IsInt : Common Validator with int type value
-func IsInt(dataMap map[string]interface{}, varNames []string, c amqp.Delivery) bool {
+func IsInt(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(uint32); !ok {
 			return false
