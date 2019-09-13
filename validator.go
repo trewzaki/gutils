@@ -53,7 +53,7 @@ func IsBool(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsInterface : Deprecated
+// IsInterface : Deprecated!!
 func IsInterface(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(interface{}); !ok {
@@ -75,7 +75,7 @@ func IsObject(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsArrayInterface : Deprecated
+// IsArrayInterface : Deprecated!!
 func IsArrayInterface(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].([]interface{}); !ok {
@@ -93,6 +93,22 @@ func IsArrayInterface(dataMap map[string]interface{}, varNames []string) bool {
 
 // IsArray : Common Validator with array type value
 func IsArray(dataMap map[string]interface{}, varNames []string) bool {
+	for _, vn := range varNames {
+		if _, ok := dataMap[vn].([]interface{}); !ok {
+			return false
+		} else if ok {
+			tmpMap := dataMap[vn].([]interface{})
+			if len(tmpMap) == 0 {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
+// IsArrayObject : Common Validator with array object type value
+func IsArrayObject(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].([]map[string]interface{}); !ok {
 			return false
