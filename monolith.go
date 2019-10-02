@@ -17,10 +17,12 @@ func GatewayLogger(c *gin.Context, funcName string) {
 	fmt.Println(" | Request Time:", time.Now())
 }
 
-// GetRequest : Get both of POST and GET method request
+// GetRequest : Get payload request of all request method
 func GetRequest(c *gin.Context, reqMap map[string]interface{}, getMethodVarNames []string) {
-	c.BindJSON(&reqMap)
-	reqByte, _ := json.Marshal(reqMap)
+	reqMethod := c.Request.Method
+	if reqMethod != "GET" {
+		c.BindJSON(&reqMap)
+	}
 
 	if getMethodVarNames != nil {
 		var err error
@@ -43,5 +45,6 @@ func GetRequest(c *gin.Context, reqMap map[string]interface{}, getMethodVarNames
 		}
 	}
 
+	reqByte, _ := json.Marshal(reqMap)
 	fmt.Printf("[x] Request JSON: %s\n", string(reqByte))
 }
