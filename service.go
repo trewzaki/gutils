@@ -2,25 +2,26 @@ package gutils
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 
 	"github.com/streadway/amqp"
 )
 
 // >> Service communication example:
-//  serviceResMap, ok := gutils.ServiceCommunicator(userResMap, "service", "service.queue", data)
+//  serviceResMap, ok := gutils.ServiceCommunicator(userResMap, "service", "service.queue", data, rabbitmq.ClientRPC)
 // 	if !ok {
 // 		return gutils.ReturnServiceError()
 // 	}
 
 // ServiceCommunicator : Service communicator function for rabbitmq
 func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, topicName string, data amqp.Delivery, clientRPC func([]byte, string, string, string) []byte) (map[string]interface{}, bool) {
-	dataMap["user_id"] = "service"
+	if dataMap["user_id"] == nil {
+		dataMap["user_id"] = "service"
+	}
 
 	reqByte, marshalErr := json.Marshal(dataMap)
 	if marshalErr != nil {
-		fmt.Println("Marshal error: ", marshalErr)
-
+		log.Println("ServiceCommunicator Marshal error: ", marshalErr)
 		return nil, false
 	}
 
@@ -30,8 +31,7 @@ func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, top
 
 	unmarshalErr := json.Unmarshal(resByte, &resMap)
 	if unmarshalErr != nil {
-		fmt.Println("Unmarshal error: ", marshalErr)
-
+		log.Println("ServiceCommunicator Unmarshal error: ", marshalErr)
 		return nil, false
 	}
 
