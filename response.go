@@ -43,6 +43,7 @@ func SendResponse(success bool, message *string, data interface{}) []byte {
 	if responseLogger {
 		fmt.Println("[x] Send Response :>> ", string(resByte))
 	}
+	responseLogger = true
 
 	return resByte
 }
