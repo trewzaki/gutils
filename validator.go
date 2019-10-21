@@ -54,8 +54,8 @@ const (
 	TypeArrayObject = 16
 )
 
-// Typevalidator : Common validator with custom type value
-func Typevalidator(varType int, dataMap map[string]interface{}, varNames []string) bool {
+// TypeValidator : Common validator with custom type value
+func TypeValidator(varType int, dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		switch varType {
 		case 1:
