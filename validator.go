@@ -5,53 +5,53 @@ import (
 )
 
 const (
-	// TypeString : string type symbol
-	TypeString = 1
+	// StringType : string type symbol
+	StringType = 1
 
-	// TypeInt : int type symbol
-	TypeInt = 2
+	// IntType : int type symbol
+	IntType = 2
 
-	// TypeInt8 : int8 type symbol
-	TypeInt8 = 3
+	// Int8Type : int8 type symbol
+	Int8Type = 3
 
-	// TypeInt16 : int16 type symbol
-	TypeInt16 = 4
+	// Int16Type : int16 type symbol
+	Int16Type = 4
 
-	// TypeInt32 : int32 type symbol
-	TypeInt32 = 5
+	// Int32Type : int32 type symbol
+	Int32Type = 5
 
-	// TypeInt64 : int64 type symbol
-	TypeInt64 = 6
+	// Int64Type : int64 type symbol
+	Int64Type = 6
 
-	// TypeUInt : uint type symbol
-	TypeUInt = 7
+	// UIntType : uint type symbol
+	UIntType = 7
 
-	// TypeUInt8 : uint8 type symbol
-	TypeUInt8 = 8
+	// UInt8Type : uint8 type symbol
+	UInt8Type = 8
 
-	// TypeUInt16 : uint16 type symbol
-	TypeUInt16 = 9
+	// UInt16Type : uint16 type symbol
+	UInt16Type = 9
 
-	// TypeUInt32 : uint32 type symbol
-	TypeUInt32 = 10
+	// UInt32Type : uint32 type symbol
+	UInt32Type = 10
 
-	// TypeUInt64 : uint64 type symbol
-	TypeUInt64 = 11
+	// UInt64Type : uint64 type symbol
+	UInt64Type = 11
 
-	// TypeFloat32 : float32 type symbol
-	TypeFloat32 = 12
+	// Float32Type : float32 type symbol
+	Float32Type = 12
 
-	// TypeFloat64 : float64 type symbol
-	TypeFloat64 = 13
+	// Float64Type : float64 type symbol
+	Float64Type = 13
 
-	// TypeObject : map[string]interface{} type symbol
-	TypeObject = 14
+	// ObjectType : map[string]interface{} type symbol
+	ObjectType = 14
 
-	// TypeArray : []interface{} type symbol
-	TypeArray = 15
+	// ArrayType : []interface{} type symbol
+	ArrayType = 15
 
-	// TypeArrayObject : []map[string]interface{} type symbol
-	TypeArrayObject = 16
+	// ArrayObjectType : []map[string]interface{} type symbol
+	ArrayObjectType = 16
 )
 
 // TypeValidator : Common validator with custom type value
@@ -140,7 +140,7 @@ func TypeValidator(varType int, dataMap map[string]interface{}, varNames []strin
 	return true
 }
 
-// IsString : Common validator with string type value
+// IsString : Deprecated!!
 func IsString(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(string); !ok {
@@ -151,7 +151,7 @@ func IsString(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsInt : Common validator with int type value
+// IsInt : Deprecated!!
 func IsInt(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(int); !ok {
@@ -162,7 +162,7 @@ func IsInt(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsUInt32 : Common validator with uint32 type value
+// IsUInt32 : Deprecated!!
 func IsUInt32(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(uint32); !ok {
@@ -173,7 +173,7 @@ func IsUInt32(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsFloat : Common validator with float type value
+// IsFloat : Deprecated!!
 func IsFloat(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(float64); !ok {
@@ -184,7 +184,7 @@ func IsFloat(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsBool : Common validator with boolean type value
+// IsBool : Deprecated!!
 func IsBool(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(bool); !ok {
@@ -206,7 +206,7 @@ func IsInterface(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsObject : Common validator with object type value
+// IsObject : Deprecated!!
 func IsObject(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].(map[string]interface{}); !ok {
@@ -233,7 +233,7 @@ func IsArrayInterface(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsArray : Common validator with array type value
+// IsArray : Deprecated!!
 func IsArray(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].([]interface{}); !ok {
@@ -249,7 +249,7 @@ func IsArray(dataMap map[string]interface{}, varNames []string) bool {
 	return true
 }
 
-// IsArrayObject : Common validator with array object type value
+// IsArrayObject : Deprecated!!
 func IsArrayObject(dataMap map[string]interface{}, varNames []string) bool {
 	for _, vn := range varNames {
 		if _, ok := dataMap[vn].([]map[string]interface{}); !ok {
