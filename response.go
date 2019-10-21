@@ -7,14 +7,13 @@ import (
 
 const (
 	// NoPrint : Setting to no print type
-	NoPrint = 1
+	NoPrint = false
 
 	// Print : Setting to print type
-	Print = 0
+	Print = true
 )
 
-// ResponseLogger : Logger status to print or no print in SendResponse function
-var ResponseLogger = 1
+var responseLogger = true
 
 // ErrorResponse : Error response model
 type errorResponse struct {
@@ -41,9 +40,14 @@ func SendResponse(success bool, message *string, data interface{}) []byte {
 
 	resByte, _ := json.Marshal(resMap)
 
-	if ResponseLogger == 1 {
+	if responseLogger {
 		fmt.Println("[x] Send Response :>> ", string(resByte))
 	}
 
 	return resByte
+}
+
+// SetResponseLogger : Set logger status to print or no print in SendResponse function
+func SetResponseLogger(printStatus bool) {
+	responseLogger = printStatus
 }
