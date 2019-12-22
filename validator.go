@@ -52,6 +52,9 @@ const (
 
 	// ArrayObjectType : []map[string]interface{} type symbol
 	ArrayObjectType = 16
+
+	// BooleanType : bool type symbol
+	BooleanType = 17
 )
 
 // TypeValidator : Common validator with custom type value
@@ -134,8 +137,11 @@ func TypeValidator(varType int, dataMap map[string]interface{}, varNames []strin
 					return false
 				}
 			}
+		case 17:
+			if _, ok := dataMap[vn].(bool); !ok {
+				return false
+			}
 		}
-
 	}
 	return true
 }

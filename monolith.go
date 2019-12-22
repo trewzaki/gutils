@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 // GatewayLogger : Gateway log with physical path, function name, client IP and request time
@@ -21,7 +22,7 @@ func GatewayLogger(c *gin.Context, funcName string) {
 func GetRequest(c *gin.Context, reqMap map[string]interface{}, getMethodVarNames []string) {
 	reqMethod := c.Request.Method
 	if reqMethod != "GET" {
-		c.BindJSON(&reqMap)
+		c.ShouldBindWith(&reqMap, binding.JSON)
 	}
 
 	if getMethodVarNames != nil {
