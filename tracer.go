@@ -22,11 +22,11 @@ func Inject(tracer opentracing.Tracer, spanContext opentracing.SpanContext, head
 }
 
 // StartSpanFromAMQPHeader : Start span from amqp header
-func StartSpanFromAMQPHeader(tracer opentracing.Tracer, operationName string, header amqp.Table) opentracing.Span {
+func StartSpanFromAMQPHeader(tracer opentracing.Tracer, operationName string, header amqp.Table) (opentracing.Span, opentracing.SpanContext) {
 	carrier := amqpHeadersCarrier(header)
 	spanContext, _ := tracer.Extract(opentracing.TextMap, carrier)
 
-	return tracer.StartSpan(operationName, opentracing.FollowsFrom(spanContext))
+	return tracer.StartSpan(operationName, opentracing.FollowsFrom(spanContext)), spanContext
 }
 
 type amqpHeadersCarrier map[string]interface{}
