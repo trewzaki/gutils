@@ -15,8 +15,8 @@ func StartSpanFromSpanContext(tracer opentracing.Tracer, operationName string, s
 	return tracer.StartSpan(operationName, opentracing.FollowsFrom(spanContext))
 }
 
-// Inject : Inject span context
-func Inject(tracer opentracing.Tracer, spanContext opentracing.SpanContext, header amqp.Table) {
+// OpentracingInject : Inject span context
+func OpentracingInject(tracer opentracing.Tracer, spanContext opentracing.SpanContext, header amqp.Table) {
 	carrier := amqpHeadersCarrier(header)
 	tracer.Inject(spanContext, opentracing.TextMap, carrier)
 }
