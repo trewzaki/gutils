@@ -38,6 +38,31 @@ func ServiceCommunicator(dataMap map[string]interface{}, serviceName string, top
 	return resMap, true
 }
 
+// ServiceCommunicatorV2 : Service communicator with tracing function for rabbitmq
+func ServiceCommunicatorV2(dataMap map[string]interface{}, serviceName string, topicName string, data amqp.Delivery, clientRPC func([]byte, string, string, amqp.Delivery) []byte) (map[string]interface{}, bool) {
+	if dataMap["user_id"] == nil {
+		dataMap["user_id"] = "service"
+	}
+
+	reqByte, marshalErr := json.Marshal(dataMap)
+	if marshalErr != nil {
+		log.Println("ServiceCommunicator Marshal error: ", marshalErr)
+		return nil, false
+	}
+
+	resByte := clientRPC(reqByte, serviceName, topicName, data)
+
+	resMap := map[string]interface{}{}
+
+	unmarshalErr := json.Unmarshal(resByte, &resMap)
+	if unmarshalErr != nil {
+		log.Println("ServiceCommunicator Unmarshal error: ", marshalErr)
+		return nil, false
+	}
+
+	return resMap, true
+}
+
 // ReturnServiceError : Return error response when somethong wrong about service communication
 func ReturnServiceError() []byte {
 	errRes := errorResponse{}
