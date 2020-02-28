@@ -5,7 +5,16 @@ import (
 	"fmt"
 )
 
-// ErrorResponse : Error response model
+const (
+	// NoPrint : Setting to no print type
+	NoPrint = false
+
+	// Print : Setting to print type
+	Print = true
+)
+
+var responseLogger = true
+
 type errorResponse struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
@@ -14,8 +23,8 @@ type errorResponse struct {
 // >> Send response example:
 // return SendResposne(true, &message, map[string]interface{}{"foo": "bar"})
 
-// SendResponse :  Standard response form in my projects
-func SendResponse(success bool, message *string, data map[string]interface{}) []byte {
+// SendResponse : Standard response form in my projects
+func SendResponse(success bool, message *string, data interface{}) []byte {
 	resMap := map[string]interface{}{
 		"success": success,
 	}
@@ -29,7 +38,16 @@ func SendResponse(success bool, message *string, data map[string]interface{}) []
 	}
 
 	resByte, _ := json.Marshal(resMap)
-	fmt.Println("[x] Send Response :>> ", string(resByte))
+
+	if responseLogger {
+		fmt.Println("[x] Send Response :>> ", string(resByte))
+	}
+	responseLogger = true
 
 	return resByte
+}
+
+// SetResponseLogger : Set logger status to print or no print in SendResponse function
+func SetResponseLogger(printStatus bool) {
+	responseLogger = printStatus
 }
