@@ -8,13 +8,20 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"github.com/labstack/echo/v4"
 )
 
-// GatewayLogger : Gateway log with physical path, function name, client IP and request time
+// GatewayLogger : Gateway log with physical path, function name, client IP and request timefor gin-gonic library
 func GatewayLogger(c *gin.Context, funcName string) {
-	// tmpPath, _ := c.Get("path")
 	fmt.Printf("\n>>>>>>>>> Path: %s => Trig %s() function\n", c.Request.URL, funcName)
 	fmt.Print("========> Request From: ", c.ClientIP())
+	fmt.Println(" | Request Time:", time.Now())
+}
+
+// GatewayLoggerEcho : Gateway log with physical path, function name, client IP and request time for echo library
+func GatewayLoggerEcho(c echo.Context, funcName string) {
+	fmt.Printf("\n>>>>>>>>> Path: %s => Trig %s() function\n", c.Request().RequestURI, funcName)
+	fmt.Print("========> Request From: ", c.RealIP())
 	fmt.Println(" | Request Time:", time.Now())
 }
 
