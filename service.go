@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/streadway/amqp"
+	"go.elastic.co/apm"
 )
 
 // >> Service communication example:
@@ -51,6 +52,32 @@ func ServiceCommunicatorV2(dataMap map[string]interface{}, serviceName string, t
 	}
 
 	resByte := clientRPC(reqByte, serviceName, topicName, data)
+
+	resMap := map[string]interface{}{}
+
+	unmarshalErr := json.Unmarshal(resByte, &resMap)
+	if unmarshalErr != nil {
+		log.Println("ServiceCommunicator Unmarshal error: ", marshalErr)
+		return nil, false
+	}
+
+	return resMap, true
+}
+
+// ServiceCommunicatorAPM : Service communicator function for rabbitmq
+func ServiceCommunicatorAPM(txApm *apm.Transaction, dataMap map[string]interface{}, serviceName string, topicName string, data amqp.Delivery, clientRPC func(*apm.Transaction, []byte, string, string, string) []byte) (map[string]interface{}, bool) {
+
+	if dataMap["user_id"] == nil {
+		dataMap["user_id"] = "service"
+	}
+
+	reqByte, marshalErr := json.Marshal(dataMap)
+	if marshalErr != nil {
+		log.Println("ServiceCommunicator Marshal error: ", marshalErr)
+		return nil, false
+	}
+
+	resByte := clientRPC(txApm, reqByte, serviceName, topicName, data.CorrelationId)
 
 	resMap := map[string]interface{}{}
 
