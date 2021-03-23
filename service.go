@@ -104,7 +104,7 @@ func ReturnServiceError() []byte {
 
 func GetFGServiceName(exchangeName string) string {
 	if match, _ := regexp.MatchString("(fblfg_order)", exchangeName); match {
-		return "fblfg-order-service"
+		return "fblfg-order-sev"
 	} else if match, _ := regexp.MatchString("(order|address|zipcode|sub-district|district|province)", exchangeName); match {
 		return "order-service"
 	} else if match, _ := regexp.MatchString("(content)", exchangeName); match {
