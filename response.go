@@ -41,7 +41,11 @@ func SendResponse(success bool, message *string, data interface{}) []byte {
 	resByte, _ := json.Marshal(resMap)
 
 	if responseLogger {
-		fmt.Println("[x] Send Response :>> ", string(resByte[0:responseLoggerLimit]))
+		if len(resByte) < int(responseLoggerLimit) {
+			fmt.Println("[x] Send Response :>> ", string(resByte))
+		} else {
+			fmt.Println("[x] Send Response :>> ", string(resByte[0:responseLoggerLimit]))
+		}
 	}
 	responseLogger = true
 
@@ -73,7 +77,11 @@ func SendResponseV2(success bool, message *string, data interface{}, errors []st
 	resByte, _ := json.Marshal(resMap)
 
 	if responseLogger {
-		fmt.Println("[x] Send Response :>> ", string(resByte[0:responseLoggerLimit]))
+		if len(resByte) < int(responseLoggerLimit) {
+			fmt.Println("[x] Send Response :>> ", string(resByte))
+		} else {
+			fmt.Println("[x] Send Response :>> ", string(resByte[0:responseLoggerLimit]))
+		}
 	}
 	responseLogger = true
 
