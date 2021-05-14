@@ -14,6 +14,7 @@ const (
 )
 
 var responseLogger = true
+var responseLoggerLimit = uint32(10000)
 
 type errorResponse struct {
 	Success bool   `json:"success"`
@@ -40,7 +41,39 @@ func SendResponse(success bool, message *string, data interface{}) []byte {
 	resByte, _ := json.Marshal(resMap)
 
 	if responseLogger {
-		fmt.Println("[x] Send Response :>> ", string(resByte))
+		fmt.Println("[x] Send Response :>> ", string(resByte[0:responseLoggerLimit]))
+	}
+	responseLogger = true
+
+	return resByte
+}
+
+// SendResponseV2 : Standard response form in my projects
+func SendResponseV2(success bool, message *string, data interface{}, errors []string, pages *uint32) []byte {
+	resMap := map[string]interface{}{
+		"success": success,
+	}
+
+	if message != nil {
+		resMap["message"] = *message
+	}
+
+	if data != nil {
+		resMap["data"] = data
+	}
+
+	if errors != nil {
+		resMap["errors"] = errors
+	}
+
+	if pages != nil {
+		resMap["pages"] = pages
+	}
+
+	resByte, _ := json.Marshal(resMap)
+
+	if responseLogger {
+		fmt.Println("[x] Send Response :>> ", string(resByte[0:responseLoggerLimit]))
 	}
 	responseLogger = true
 
@@ -50,4 +83,9 @@ func SendResponse(success bool, message *string, data interface{}) []byte {
 // SetResponseLogger : Set logger status to print or no print in SendResponse function
 func SetResponseLogger(printStatus bool) {
 	responseLogger = printStatus
+}
+
+// SetResponseLogger : Set maximum text length of log printer
+func SetResponseLoggerLimit(limit uint32) {
+	responseLoggerLimit = limit
 }
