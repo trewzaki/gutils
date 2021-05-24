@@ -3,6 +3,7 @@ package gutils
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"strconv"
 	"time"
 
@@ -23,6 +24,16 @@ func EchoGatewayLogger(c echo.Context, funcName string) {
 	fmt.Printf("\n>>>>>>>>> Path: %s => Trig %s() function\n", c.Request().RequestURI, funcName)
 	fmt.Print("========> Request From: ", c.RealIP())
 	fmt.Println(" | Request Time:", time.Now())
+}
+
+// EchoGatewayLoggerV2 : Gateway log with physical path, function name, client IP, request time and request payload for echo library
+func EchoGatewayLoggerV2(c echo.Context, funcName string, reqMap map[string]interface{}) {
+	fmt.Printf("\n>>>>>>>>> Path: %s => Trig %s() function\n", c.Request().RequestURI, funcName)
+	fmt.Print("========> Request From: ", c.RealIP())
+	fmt.Println(" | Request Time:", time.Now())
+
+	reqByte, _ := json.Marshal(reqMap)
+	log.Println("Request payload: ", string(reqByte))
 }
 
 // GetRequest : Get payload request of all request method
