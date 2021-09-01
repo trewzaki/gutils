@@ -52,7 +52,7 @@ func SendResponse(success bool, message *string, data interface{}) []byte {
 	return resByte
 }
 
-// SendResponseV2 : Standard response form in my projects
+// SendResponseV2 : Standard response form in my projects - add errors, pages key
 func SendResponseV2(success bool, message *string, data interface{}, errors []string, pages *uint32) []byte {
 	resMap := map[string]interface{}{
 		"success": success,
@@ -72,6 +72,42 @@ func SendResponseV2(success bool, message *string, data interface{}, errors []st
 
 	if pages != nil {
 		resMap["pages"] = pages
+	}
+
+	resByte, _ := json.Marshal(resMap)
+
+	if responseLogger {
+		if len(resByte) < int(responseLoggerLimit) {
+			fmt.Println("[x] Send Response :>> ", string(resByte))
+		} else {
+			fmt.Println("[x] Send Response :>> ", string(resByte[0:responseLoggerLimit]))
+		}
+	}
+	responseLogger = true
+
+	return resByte
+}
+
+// SendResponseV3 : Standard response form in my projects - update can customize response key-value with map
+func SendResponseV3(success bool, message *string, data interface{}, errors []string, custom map[string]interface{}) []byte {
+	resMap := map[string]interface{}{
+		"success": success,
+	}
+
+	if message != nil {
+		resMap["message"] = *message
+	}
+
+	if data != nil {
+		resMap["data"] = data
+	}
+
+	if errors != nil {
+		resMap["errors"] = errors
+	}
+
+	for k, v := range custom {
+		resMap[k] = v
 	}
 
 	resByte, _ := json.Marshal(resMap)
